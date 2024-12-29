@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
+            background-color: #282c34; /* One Dark background */
+            color: #abb2bf; /* One Dark text color */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,7 +17,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
         .container {
-            background: white;
+            background: #3c4048; /* One Dark container background */
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -28,7 +28,7 @@
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #333;
+            color: #abb2bf;
         }
         select, input[type="file"] {
             padding: 10px;
@@ -62,60 +62,6 @@
         .download-link a:hover {
             text-decoration: underline;
         }
-        /* Theme Styles */
-        .gruvbox {
-            background-color: #282828;
-            color: #ebdbb2;
-        }
-
-        .onedark {
-            background-color: #282c34;
-            color: #abb2bf;
-        }
-
-        .dracula {
-            background-color: #282a36;
-            color: #f8f8f2;
-        }
-
-        .minecraft {
-            background-color: #a8b0b7;
-            color: #4d4d4d;
-        }
-
-        .homestuck {
-            background-color: #4e4e4e;
-            color: #89b96d;
-        }
-
-        .undertale {
-            background-color: #5c0000;
-            color: #fff;
-        }
-
-        /* Theme Change Buttons */
-        .theme-buttons {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-buttons button {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-
-        .theme-buttons button:hover {
-            background-color: #555;
-        }
     </style>
 </head>
 <body>
@@ -147,32 +93,10 @@
         {% endif %}
     </div>
 
-    <!-- Theme Change Buttons -->
-    <div class="theme-buttons">
-        <button onclick="changeTheme('gruvbox')">Gruvbox</button>
-        <button onclick="changeTheme('onedark')">One Dark</button>
-        <button onclick="changeTheme('dracula')">Dracula</button>
-        <button onclick="changeTheme('minecraft')">Minecraft</button>
-        <button onclick="changeTheme('homestuck')">Homestuck</button>
-        <button onclick="changeTheme('undertale')">Undertale</button>
-    </div>
-
     <script>
-        // Change Theme
-        function changeTheme(theme) {
-            document.body.classList.remove('gruvbox', 'onedark', 'dracula', 'minecraft', 'homestuck', 'undertale');
-            document.body.classList.add(theme);
-
-            // Store the theme in localStorage
-            localStorage.setItem('theme', theme);
-        }
-
-        // Apply saved theme from localStorage
+        // Apply One Dark theme on page load
         window.onload = function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.body.classList.add(savedTheme);
-            }
+            document.body.classList.add('onedark');
         };
     </script>
 </body>
