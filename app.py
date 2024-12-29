@@ -1,12 +1,8 @@
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, request, render_template, send_file
 from PIL import Image
-import os
+import io
 
 app = Flask(__name__)
-UPLOAD_FOLDER = './uploads'
-CONVERTED_FOLDER = './converted'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(CONVERTED_FOLDER, exist_ok=True)
 
 @app.route('/')
 def index():
@@ -23,28 +19,19 @@ def convert():
     current_format = request.form['current_format']
     target_format = request.form['target_format']
 
-    # Save the uploaded image
-    uploaded_image_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(uploaded_image_path)
+    # Read the image file into memory
+    img = Image.open(file.stream)
 
-    # Open the image and convert it
-    try:
-        img = Image.open(uploaded_image_path)
-        img = img.convert("RGB")  # Convert to RGB if it's not, to avoid issues with formats like PNG
-        converted_filename = f"{os.path.splitext(file.filename)[0]}.{target_format.lower()}"
-        converted_image_path = os.path.join(CONVERTED_FOLDER, converted_filename)
-        img.save(converted_image_path, target_format)
-    except Exception as e:
-        return f"Error during conversion: {str(e)}", 500
+    # Convert to RGB if it's not in a format compatible with all targets
+    img = img.convert("RGB")
 
-    # Provide a download link
-    download_link = f"/download/{converted_filename}"
-    return render_template('index.html', download_link=download_link)
+    # Save the image to a BytesIO object instead of a file on disk
+    img_io = io.BytesIO()
+    img.save(img_io, target_format)
+    img_io.seek(0)
 
-@app.route('/download/<filename>')
-def download(filename):
-    return send_from_directory(CONVERTED_FOLDER, filename)
+    # Return the converted image directly as a response
+    return send_file(img_io, mimetype=f'image/{target_format.lower()}', as_attachment=True, download_name=f'converted_image.{target_format.lower()}')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
