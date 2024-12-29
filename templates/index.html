@@ -3,61 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntZam's FUNKWEBP</title>
+    <title>Image Format Converter</title>
     <style>
+        /* Default Theme - Light */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f7fc;
             color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Hamburger Menu Styles */
+        .menu-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .menu-btn div {
+            width: 100%;
+            height: 4px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            height: 100%;
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            transition: left 0.3s;
+            z-index: 10;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
+        .sidebar a:hover {
+            background-color: #444;
+        }
+
+        .sidebar .close-btn {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .sidebar .close-btn:hover {
+            background-color: #ff2c2c;
+        }
+
+        /* Themes */
+        .gruvbox {
+            background-color: #282828;
+            color: #ebdbb2;
+        }
+
+        .onedark {
+            background-color: #282c34;
+            color: #abb2bf;
+        }
+
+        .dracula {
+            background-color: #282a36;
+            color: #f8f8f2;
+        }
+
+        .nord {
+            background-color: #2e3440;
+            color: #d8dee9;
+        }
+
+        .minecraft {
+            background-color: #a8b0b7;
+            color: #4d4d4d;
         }
 
         .container {
-            background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 400px;
             text-align: center;
+            transition: all 0.3s;
         }
 
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #333;
         }
 
-        select, input[type="file"] {
+        select, input[type="file"], button {
             padding: 10px;
             margin: 10px 0;
             width: 100%;
             border-radius: 8px;
             border: 1px solid #ddd;
             font-size: 16px;
+            transition: all 0.3s;
         }
 
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
             cursor: pointer;
-            width: 100%;
         }
 
         button:hover {
             background-color: #45a049;
-        }
-
-        .download-link {
-            margin-top: 20px;
-            font-size: 16px;
         }
 
         .download-link a {
@@ -68,12 +144,30 @@
         .download-link a:hover {
             text-decoration: underline;
         }
+
     </style>
 </head>
 <body>
+    <!-- Hamburger Menu -->
+    <div class="menu-btn" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Sidebar for theme selection -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">Close Menu</button>
+        <h2>Select Theme</h2>
+        <a href="javascript:void(0);" onclick="changeTheme('gruvbox')">Gruvbox</a>
+        <a href="javascript:void(0);" onclick="changeTheme('onedark')">One Dark</a>
+        <a href="javascript:void(0);" onclick="changeTheme('dracula')">Dracula</a>
+        <a href="javascript:void(0);" onclick="changeTheme('nord')">Nord</a>
+        <a href="javascript:void(0);" onclick="changeTheme('minecraft')">Minecraft</a>
+    </div>
+
     <div class="container">
-        <h1>FUNK. WEBP</h1>
-        <center><p>Because it sucks, yet it's everywhere.</p></center>
+        <h1>Image Format Converter</h1>
         <form action="/convert" method="POST" enctype="multipart/form-data">
             <label for="current_format">Current Format:</label>
             <select id="current_format" name="current_format">
@@ -102,6 +196,34 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+        // Toggle Sidebar for Theme Selection
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+            } else {
+                sidebar.style.left = '-250px';
+            }
+        }
+
+        // Change Theme
+        function changeTheme(theme) {
+            document.body.classList.remove('gruvbox', 'onedark', 'dracula', 'nord', 'minecraft');
+            document.body.classList.add(theme);
+
+            // Store the theme in localStorage
+            localStorage.setItem('theme', theme);
+        }
+
+        // Apply saved theme from localStorage
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.classList.add(savedTheme);
+            }
+        };
+    </script>
 </body>
 </html>
-
