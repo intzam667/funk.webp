@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Format Converter</title>
+    <title>IntZam's FUNKWEBP</title>
     <style>
         /* Default Theme - Light */
         body {
@@ -15,38 +15,16 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Hamburger Menu Styles */
-        .menu-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 25px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .menu-btn div {
-            width: 100%;
-            height: 4px;
-            background-color: #333;
-            border-radius: 5px;
-        }
-
         /* Sidebar Menu on the Right */
         .sidebar {
             position: fixed;
             top: 0;
-            right: -250px;  /* Sidebar is hidden initially */
+            right: 0;
             height: 100%;
             width: 250px;
             background-color: #333;
             color: #fff;
             padding: 20px;
-            transition: right 0.3s;
             z-index: 9;
         }
 
@@ -110,6 +88,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: all 0.3s;
+            margin-right: 270px; /* Make space for the sidebar */
         }
 
         h1 {
@@ -118,7 +97,7 @@
         }
 
         select, input[type="file"], button {
-            padding: 10px;
+            padding: 8px;
             margin: 10px 0;
             width: 100%;
             border-radius: 8px;
@@ -149,15 +128,8 @@
     </style>
 </head>
 <body>
-    <!-- Hamburger Menu -->
-    <div class="menu-btn" onclick="toggleSidebar()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-
     <!-- Sidebar for theme selection -->
-    <div id="sidebar" class="sidebar">
+    <div class="sidebar">
         <button class="close-btn" onclick="toggleSidebar()">Close Menu</button>
         <h2>Select Theme</h2>
         <a href="javascript:void(0);" onclick="changeTheme('gruvbox')">Gruvbox</a>
@@ -168,7 +140,8 @@
     </div>
 
     <div class="container">
-        <h1>Image Format Converter</h1>
+        <h1>FUNK. WEBP</h1>
+        <center><p>Because it sucks, yet it's everywhere.</p></center>
         <form action="/convert" method="POST" enctype="multipart/form-data">
             <label for="current_format">Current Format:</label>
             <select id="current_format" name="current_format">
@@ -199,16 +172,6 @@
     </div>
 
     <script>
-        // Toggle Sidebar for Theme Selection
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar.style.right === '-250px' || sidebar.style.right === '') {
-                sidebar.style.right = '0'; // Show the sidebar
-            } else {
-                sidebar.style.right = '-250px'; // Hide the sidebar
-            }
-        }
-
         // Change Theme
         function changeTheme(theme) {
             document.body.classList.remove('gruvbox', 'onedark', 'dracula', 'nord', 'minecraft');
