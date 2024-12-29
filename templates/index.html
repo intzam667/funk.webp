@@ -36,17 +36,17 @@
             border-radius: 5px;
         }
 
-        /* Sidebar Menu */
+        /* Sidebar Menu on the Right */
         .sidebar {
             position: fixed;
             top: 0;
-            left: -250px;
+            right: -250px;  /* Sidebar is hidden initially */
             height: 100%;
             width: 250px;
             background-color: #333;
             color: #fff;
             padding: 20px;
-            transition: left 0.3s;
+            transition: right 0.3s;
             z-index: 9;
         }
 
@@ -202,10 +202,10 @@
         // Toggle Sidebar for Theme Selection
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            if (sidebar.style.left === '-250px' || sidebar.style.left === '') {
-                sidebar.style.left = '0';
+            if (sidebar.style.right === '-250px' || sidebar.style.right === '') {
+                sidebar.style.right = '0'; // Show the sidebar
             } else {
-                sidebar.style.left = '-250px';
+                sidebar.style.right = '-250px'; // Hide the sidebar
             }
         }
 
