@@ -5,58 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IntZam's FUNKWEBP</title>
     <style>
-        /* Default Theme - Light */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f7fc;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
             transition: background-color 0.3s, color 0.3s;
         }
-
-        /* Sidebar Menu on the Right */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 250px;
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            z-index: 9;
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            transition: all 0.3s;
         }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
-            border-radius: 4px;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
         }
-
-        .sidebar a:hover {
-            background-color: #444;
-        }
-
-        .sidebar .close-btn {
-            background-color: #ff4c4c;
-            color: white;
-            border: none;
+        select, input[type="file"] {
             padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            border-radius: 4px;
             width: 100%;
         }
-
-        .sidebar .close-btn:hover {
-            background-color: #ff2c2c;
+        button:hover {
+            background-color: #45a049;
         }
-
-        /* Themes */
+        .download-link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .download-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .download-link a:hover {
+            text-decoration: underline;
+        }
+        /* Theme Styles */
         .gruvbox {
             background-color: #282828;
             color: #ebdbb2;
@@ -72,73 +78,47 @@
             color: #f8f8f2;
         }
 
-        .nord {
-            background-color: #2e3440;
-            color: #d8dee9;
-        }
-
         .minecraft {
             background-color: #a8b0b7;
             color: #4d4d4d;
         }
 
-        .container {
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s;
-            margin-right: 270px; /* Make space for the sidebar */
+        .homestuck {
+            background-color: #4e4e4e;
+            color: #89b96d;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .undertale {
+            background-color: #5c0000;
+            color: #fff;
         }
 
-        select, input[type="file"], button {
-            padding: 8px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            transition: all 0.3s;
+        /* Theme Change Buttons */
+        .theme-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
         }
 
-        button {
-            background-color: #4CAF50;
+        .theme-buttons button {
+            background-color: #333;
             color: white;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
             cursor: pointer;
+            border-radius: 8px;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .theme-buttons button:hover {
+            background-color: #555;
         }
-
-        .download-link a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        .download-link a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
-    <!-- Sidebar for theme selection -->
-    <div class="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">Close Menu</button>
-        <h2>Select Theme</h2>
-        <a href="javascript:void(0);" onclick="changeTheme('gruvbox')">Gruvbox</a>
-        <a href="javascript:void(0);" onclick="changeTheme('onedark')">One Dark</a>
-        <a href="javascript:void(0);" onclick="changeTheme('dracula')">Dracula</a>
-        <a href="javascript:void(0);" onclick="changeTheme('nord')">Nord</a>
-        <a href="javascript:void(0);" onclick="changeTheme('minecraft')">Minecraft</a>
-    </div>
-
     <div class="container">
         <h1>FUNK. WEBP</h1>
         <center><p>Because it sucks, yet it's everywhere.</p></center>
@@ -149,20 +129,16 @@
                 <option value="PNG">PNG</option>
                 <option value="WEBP">WEBP</option>
             </select>
-
             <label for="target_format">Target Format:</label>
             <select id="target_format" name="target_format">
                 <option value="JPEG">JPEG</option>
                 <option value="PNG">PNG</option>
                 <option value="WEBP">WEBP</option>
             </select>
-
             <label for="image">Upload Image:</label>
             <input type="file" name="image" accept="image/*" required>
-
             <button type="submit">Convert Image</button>
         </form>
-
         {% if download_link %}
             <div class="download-link">
                 <h3>Converted Image:</h3>
@@ -171,10 +147,20 @@
         {% endif %}
     </div>
 
+    <!-- Theme Change Buttons -->
+    <div class="theme-buttons">
+        <button onclick="changeTheme('gruvbox')">Gruvbox</button>
+        <button onclick="changeTheme('onedark')">One Dark</button>
+        <button onclick="changeTheme('dracula')">Dracula</button>
+        <button onclick="changeTheme('minecraft')">Minecraft</button>
+        <button onclick="changeTheme('homestuck')">Homestuck</button>
+        <button onclick="changeTheme('undertale')">Undertale</button>
+    </div>
+
     <script>
         // Change Theme
         function changeTheme(theme) {
-            document.body.classList.remove('gruvbox', 'onedark', 'dracula', 'nord', 'minecraft');
+            document.body.classList.remove('gruvbox', 'onedark', 'dracula', 'minecraft', 'homestuck', 'undertale');
             document.body.classList.add(theme);
 
             // Store the theme in localStorage
