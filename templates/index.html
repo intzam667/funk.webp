@@ -68,14 +68,16 @@
     <div class="container">
         <h1>FUNK. WEBP</h1>
         <center><p>Because it sucks, yet it's everywhere.</p></center>
+        <center><p>No bullshit, pure convertion (religion funny)</p></center>
         <form action="/convert" method="POST" enctype="multipart/form-data">
-            <label for="current_format">Current Format:</label>
+            <!-- Image Conversion -->
+            <label for="current_format">Current Image Format:</label>
             <select id="current_format" name="current_format">
                 <option value="JPEG">JPEG</option>
                 <option value="PNG">PNG</option>
                 <option value="WEBP">WEBP</option>
             </select>
-            <label for="target_format">Target Format:</label>
+            <label for="target_format">Target Image Format:</label>
             <select id="target_format" name="target_format">
                 <option value="JPEG">JPEG</option>
                 <option value="PNG">PNG</option>
@@ -83,12 +85,30 @@
             </select>
             <label for="image">Upload Image:</label>
             <input type="file" name="image" accept="image/*" required>
-            <button type="submit">Convert Image</button>
+            
+            <!-- Video Conversion -->
+            <label for="current_video_format">Current Video Format:</label>
+            <select id="current_video_format" name="current_video_format">
+                <option value="MP4">MP4</option>
+                <option value="AVI">AVI</option>
+                <option value="WEBM">WEBM</option>
+            </select>
+            <label for="target_video_format">Target Video Format:</label>
+            <select id="target_video_format" name="target_video_format">
+                <option value="MP4">MP4</option>
+                <option value="AVI">AVI</option>
+                <option value="WEBM">WEBM</option>
+            </select>
+            <label for="video">Upload Video:</label>
+            <input type="file" name="video" accept="video/*">
+            
+            <button type="submit">Convert</button>
         </form>
+        
         {% if download_link %}
             <div class="download-link">
-                <h3>Converted Image:</h3>
-                <a href="{{ download_link }}" download>Download Converted Image</a>
+                <h3>Converted File:</h3>
+                <a href="{{ download_link }}" download>Download Converted File</a>
             </div>
         {% endif %}
     </div>
