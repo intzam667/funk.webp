@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117; 
-            color: #c9d1d9;
+            background-color: #0d1117; /* Dark background from Yozora */
+            color: #c9d1d9; /* Soft text color */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,22 +16,28 @@
             margin: 0;
         }
         .container {
-            background: #161b22; 
+            background: #161b22; /* Slightly lighter background for contrast */
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             width: 400px;
             text-align: center;
-            border: 1px solid #21262d;
+            border: 1px solid #21262d; /* Subtle border to separate from background */
         }
         h1 {
             font-size: 28px;
             margin-bottom: 10px;
-            color: #58a6ff; 
+            animation: colorChange 5s infinite;
+        }
+        @keyframes colorChange {
+            0% { color: #ff9aa2; } /* Pastel red */
+            33% { color: #ffb7b2; } /* Pastel pink */
+            66% { color: #ffdac1; } /* Pastel peach */
+            100% { color: #ff9aa2; } /* Back to pastel red */
         }
         p {
             margin-bottom: 20px;
-            color: #8b949e; 
+            color: #8b949e; /* Muted color for supporting text */
         }
         select, input[type="file"] {
             padding: 12px;
@@ -44,7 +50,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #238636;
+            background-color: #238636; /* Green accent for buttons */
             color: white;
             padding: 12px 20px;
             border: none;
@@ -55,7 +61,7 @@
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #2ea043; 
+            background-color: #2ea043; /* Slightly lighter green on hover */
         }
         .download-link {
             margin-top: 20px;
