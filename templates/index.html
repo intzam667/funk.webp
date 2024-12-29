@@ -26,6 +26,7 @@
             width: 30px;
             height: 25px;
             cursor: pointer;
+            z-index: 10;
         }
 
         .menu-btn div {
@@ -46,7 +47,7 @@
             color: #fff;
             padding: 20px;
             transition: left 0.3s;
-            z-index: 10;
+            z-index: 9;
         }
 
         .sidebar a {
@@ -201,7 +202,7 @@
         // Toggle Sidebar for Theme Selection
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            if (sidebar.style.left === '-250px') {
+            if (sidebar.style.left === '-250px' || sidebar.style.left === '') {
                 sidebar.style.left = '0';
             } else {
                 sidebar.style.left = '-250px';
