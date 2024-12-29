@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntZam's FUNKWEBP</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        select, input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .download-link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .download-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .download-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FUNK. WEBP</h1>
+        <center><p>Because it sucks, yet it's everywhere.</p></center>
+        <form action="/convert" method="POST" enctype="multipart/form-data">
+            <label for="current_format">Current Format:</label>
+            <select id="current_format" name="current_format">
+                <option value="JPEG">JPEG</option>
+                <option value="PNG">PNG</option>
+                <option value="WEBP">WEBP</option>
+            </select>
+
+            <label for="target_format">Target Format:</label>
+            <select id="target_format" name="target_format">
+                <option value="JPEG">JPEG</option>
+                <option value="PNG">PNG</option>
+                <option value="WEBP">WEBP</option>
+            </select>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" name="image" accept="image/*" required>
+
+            <button type="submit">Convert Image</button>
+        </form>
+
+        {% if download_link %}
+            <div class="download-link">
+                <h3>Converted Image:</h3>
+                <a href="{{ download_link }}" download>Download Converted Image</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
