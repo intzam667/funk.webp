@@ -1,8 +1,21 @@
-from flask import Flask, request, render_template, send_file
-from PIL import Image
-import io
+from flask import Flask, render_template, request, send_file
+from moviepy.editor import VideoFileClip
+import os
+import uuid
+import tempfile
+import shutil
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# Temporary storage path (Vercel serverless functions only allow temporary storage)
+UPLOAD_FOLDER = '/tmp/uploads/'
+CONVERTED_FOLDER = '/tmp/converted_files/'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(CONVERTED_FOLDER, exist_ok=True)
+
+# Allowed formats
+VIDEO_FORMATS = ['MP4', 'AVI', 'WEBM']
 
 @app.route('/')
 def index():
@@ -10,28 +23,42 @@ def index():
 
 @app.route('/convert', methods=['POST'])
 def convert():
-    if 'image' not in request.files:
-        return 'No file part', 400
-    file = request.files['image']
-    if file.filename == '':
-        return 'No selected file', 400
+    current_video_format = request.form.get('current_video_format')
+    target_video_format = request.form.get('target_video_format')
+    
+    video_file = request.files.get('video')
 
-    current_format = request.form['current_format']
-    target_format = request.form['target_format']
+    # Handle video conversion
+    if video_file:
+        filename = secure_filename(video_file.filename)
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        video_file.save(file_path)
 
-    # Read the image file into memory
-    img = Image.open(file.stream)
+        # Generate unique file name for the converted video
+        output_filename = str(uuid.uuid4()) + '.' + target_video_format.lower()
+        output_file_path = os.path.join(CONVERTED_FOLDER, output_filename)
 
-    # Convert to RGB if it's not in a format compatible with all targets
-    img = img.convert("RGB")
+        # Convert video using moviepy
+        try:
+            video_clip = VideoFileClip(file_path)
 
-    # Save the image to a BytesIO object instead of a file on disk
-    img_io = io.BytesIO()
-    img.save(img_io, target_format)
-    img_io.seek(0)
+            # Choose appropriate conversion method based on target format
+            if target_video_format == 'MP4':
+                video_clip.write_videofile(output_file_path, codec='libx264')
+            elif target_video_format == 'AVI':
+                video_clip.write_videofile(output_file_path, codec='libxvid')
+            elif target_video_format == 'WEBM':
+                video_clip.write_videofile(output_file_path, codec='libvpx')
 
-    # Return the converted image directly as a response
-    return send_file(img_io, mimetype=f'image/{target_format.lower()}', as_attachment=True, download_name=f'converted_image.{target_format.lower()}')
+            video_clip.close()
 
-if __name__ == '__main__':
+            download_link = os.path.join(CONVERTED_FOLDER, output_filename)
+
+        except Exception as e:
+            download_link = None
+            print(f"Error during video conversion: {e}")
+
+    return render_template('index.html', download_link=download_link)
+
+if __name__ == "__main__":
     app.run(debug=True)
