@@ -6,40 +6,45 @@
     <title>IntZam's FUNKWEBP</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #282c34; /* One Dark background */
-            color: #abb2bf; /* One Dark text color */
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; 
+            color: #c9d1d9;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            transition: background-color 0.3s, color 0.3s;
         }
         .container {
-            background: #3c4048; /* One Dark container background */
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #161b22; 
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             width: 400px;
             text-align: center;
-            transition: all 0.3s;
+            border: 1px solid #21262d;
         }
         h1 {
-            font-size: 24px;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #58a6ff; 
+        }
+        p {
             margin-bottom: 20px;
-            color: #abb2bf;
+            color: #8b949e; 
         }
         select, input[type="file"] {
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             width: 100%;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: #c9d1d9;
             font-size: 16px;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #238636;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -47,9 +52,10 @@
             font-size: 16px;
             cursor: pointer;
             width: 100%;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #2ea043; 
         }
         .download-link {
             margin-top: 20px;
@@ -57,7 +63,7 @@
         }
         .download-link a {
             text-decoration: none;
-            color: #007bff;
+            color: #58a6ff;
         }
         .download-link a:hover {
             text-decoration: underline;
@@ -67,37 +73,30 @@
 <body>
     <div class="container">
         <h1>FUNK. WEBP</h1>
-        <center><p>Because it sucks, yet it's everywhere.</p></center>
+        <p>because it sucks, yet it's everywhere.</p>
         <form action="/convert" method="POST" enctype="multipart/form-data">
-            <label for="current_format">Current Format:</label>
+            <label for="current_format">current format:</label>
             <select id="current_format" name="current_format">
                 <option value="JPEG">JPEG</option>
                 <option value="PNG">PNG</option>
                 <option value="WEBP">WEBP</option>
             </select>
-            <label for="target_format">Target Format:</label>
+            <label for="target_format">target format:</label>
             <select id="target_format" name="target_format">
                 <option value="JPEG">JPEG</option>
                 <option value="PNG">PNG</option>
                 <option value="WEBP">WEBP</option>
             </select>
-            <label for="image">Upload Image:</label>
+            <label for="image">upload image:</label>
             <input type="file" name="image" accept="image/*" required>
-            <button type="submit">Convert Image</button>
+            <button type="submit">convert image</button>
         </form>
         {% if download_link %}
             <div class="download-link">
-                <h3>Converted Image:</h3>
-                <a href="{{ download_link }}" download>Download Converted Image</a>
+                <h3>converted image:</h3>
+                <a href="{{ download_link }}" download>download converted image</a>
             </div>
         {% endif %}
     </div>
-
-    <script>
-        // Apply One Dark theme on page load
-        window.onload = function() {
-            document.body.classList.add('onedark');
-        };
-    </script>
 </body>
 </html>
