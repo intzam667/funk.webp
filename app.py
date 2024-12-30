@@ -19,18 +19,14 @@ def convert():
     current_format = request.form['current_format']
     target_format = request.form['target_format']
 
-    # Read the image file into memory
     img = Image.open(file.stream)
 
-    # Convert to RGB if it's not in a format compatible with all targets
     img = img.convert("RGB")
 
-    # Save the image to a BytesIO object instead of a file on disk
     img_io = io.BytesIO()
     img.save(img_io, target_format)
     img_io.seek(0)
 
-    # Return the converted image directly as a response
     return send_file(img_io, mimetype=f'image/{target_format.lower()}', as_attachment=True, download_name=f'converted_image.{target_format.lower()}')
 
 if __name__ == '__main__':
